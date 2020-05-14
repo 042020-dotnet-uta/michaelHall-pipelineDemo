@@ -3,20 +3,40 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-# what branch we're matching
+# what branch we are watching
 trigger:
-- master
+- 'master'
 
-# type of VM that will be created
-pool:
-  vmImage: 'ubuntu-latest'
+pool: 'ubuntu-latest'
 
-# the sequential steps to follow to build, run, test, deploy, etc... your app
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+variables:
+- name: 'instructor'
+  value: 'Mark'
+
+# watch for PR's
+pr: 'none'
+
+# groups sequential actions 
+stages:
+  - stage:
+    jobs:
+      - job: 'build'
+        steps:
+          - script: 'dotnet build'
+          - script: echo Hey there $(instructor)!
+  - stage: 
+    jobs:
+      - job: 'test'
+        dependsOn: 'build'
+        steps:
+          - script: 'dotnet test'
+
+  - stage: 
+    jobs:
+      - job: 'publish'
+        dependsOn: 'test'
+        steps:
+          - script: 'dotnet publish'
+
+name: '$(date:yyyyMMdd)$(rev:rr)'
