@@ -5,11 +5,10 @@
 
 # what branch we are watching
 trigger:
-- 'master'
+  - 'master'
 
 pool: 
   vmImage: 'ubuntu-latest'
-
 
 variables:
 - name: 'instructor'
