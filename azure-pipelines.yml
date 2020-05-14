@@ -22,8 +22,8 @@ stages:
   - stage:
     jobs:
       - job: 'build'
-        steps:
-          - script: dotnet build 'pipelineMvcDemo/pipelineMvcDemo.csproj'
+        steps: #/Desktop/RevRepo/michaelHall-pipelineDemo/pipelineMvcDemo
+          - script: dotnet build '/Desktop/RevRepo/michaelHall-pipelineDemo/pipelineMvcDemo/pipelineMvcDemo.csproj'
           - script: echo "Hey there $(instructor)!"
 
       - job: 'test'
